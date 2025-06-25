@@ -1,0 +1,155 @@
+/* Estilos globales */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #008ED6, #005F9E);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Contenedor principal */
+.container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Para el menú principal (más ancho) */
+.container-wide {
+    max-width: 900px;
+    padding: 40px;
+}
+
+/* Títulos */
+h2 {
+    color: #005F9E;
+    margin-bottom: 20px;
+}
+
+/* Grupos de formulario */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #008ED6;
+    outline: none;
+}
+
+/* Botones */
+.btn,
+button {
+    background-color: #008ED6;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 5px 0;
+}
+
+button:hover,
+.btn:hover {
+    background-color: #005F9E;
+}
+
+/* Links */
+.nav-links {
+    margin-top: 20px;
+}
+
+.nav-links a {
+    color: #008ED6;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Tabla de usuarios */
+.table-container {
+    margin-top: 30px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+td input[type="email"],
+td input[type="password"] {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Mensaje de error */
+.error {
+    color: red;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container-wide {
+        padding: 20px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    .nav-links a {
+        display: block;
+        margin-bottom: 8px;
+    }
+}

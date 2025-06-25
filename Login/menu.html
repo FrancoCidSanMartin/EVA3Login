@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal - Sistema de Usuarios</title>
+    <link rel="stylesheet" href="style.css?v=1.0">
+</head>
+<body>
+    <div class="container container-wide">
+        <div class="header">
+            <h2>Menú Principal</h2>
+            <div class="nav-links">
+                <a href="crear.html">Crear Usuario</a>
+                <a href="index.html">Cerrar Sesión</a>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div id="users-table">
+                <!-- Usuarios se cargarán aquí -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function cargarUsuarios() {
+            fetch('leer.php')
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById('users-table');
+                    if (data.length === 0) {
+                        container.innerHTML = '<p>No hay usuarios registrados.</p>';
+                        return;
+                    }
+
+                    let tabla = '<table><thead><tr><th>ID</th><th>Email</th><th>Acciones</th></tr></thead><tbody>';
+
+                    data.forEach(usuario => {
+                        tabla += `
+                            <tr>
+                                <td>${usuario.id}</td>
+                                <td><input type="email" value="${usuario.email}" id="email-${usuario.id}" /></td>
+                                <td>
+                                    <input type="password" placeholder="Nueva contraseña" id="password-${usuario.id}" />
+                                    <button onclick="actualizarUsuario(${usuario.id})">Actualizar</button>
+                                    <button onclick="eliminarUsuario(${usuario.id})">Eliminar</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    tabla += '</tbody></table>';
+                    container.innerHTML = tabla;
+                })
+                .catch(err => {
+                    document.getElementById('users-table').innerHTML = '<p class="error">Error al cargar los usuarios.</p>';
+                    console.error(err);
+                });
+        }
+
+        function eliminarUsuario(id) {
+            if (!confirm('¿Estás seguro de que deseas eliminar este usuario?')) return;
+
+            fetch('eliminar.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `id=${id}`
+            })
+            .then(res => res.text())
+            .then(() => cargarUsuarios())
+            .catch(err => console.error(err));
+        }
+
+        function actualizarUsuario(id) {
+            const email = document.getElementById(`email-${id}`).value;
+            const password = document.getElementById(`password-${id}`).value;
+
+            const datos = new URLSearchParams();
+            datos.append('id', id);
+            datos.append('email', email);
+            if (password !== '') datos.append('password', password);
+
+            fetch('actualizar.php', {
+                method: 'POST',
+                body: datos
+            })
+            .then(res => res.text())
+            .then(() => cargarUsuarios())
+            .catch(err => console.error(err));
+        }
+
+        window.onload = cargarUsuarios;
+    </script>
+</body>
+</html>
